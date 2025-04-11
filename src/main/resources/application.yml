@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: registry-server
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.actuate.autoconfigure.metrics.MetricsAutoConfiguration
+      - org.springframework.boot.actuate.autoconfigure.metrics.export.simple.SimpleMetricsExportAutoConfiguration
+      - org.springframework.boot.actuate.autoconfigure.metrics.web.tomcat.TomcatMetricsAutoConfiguration
+      - org.springframework.boot.actuate.autoconfigure.metrics.SystemMetricsAutoConfiguration
+
+server:
+  port: 8761
+
+eureka:
+  server:
+    enable-self-preservation: true
+  instance:
+    preferIpAddress: true
+    hostname: ${HOSTNAME:registry-server}
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+
+management:
+  endpoints:
+    enabled-by-default: false
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      enabled: true
+  metrics:
+    enable:
+      all: false
+  health:
+    defaults:
+      enabled: false
+    diskspace:
+      enabled: false
