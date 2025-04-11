@@ -1,15 +1,14 @@
+# Imagen base ligera con Java 17
 FROM openjdk:17-jdk-slim
 
+# Directorio donde irá tu app dentro del contenedor
 WORKDIR /app
 
-# Instalar curl para healthcheck
-RUN apt update && apt install -y curl
-
-# Copiar el JAR
+# Copia el JAR generado
 COPY target/*.jar app.jar
 
-# Exponer el puerto
-EXPOSE 8762
+# Expone el puerto de Eureka (8761)
+EXPOSE 8761
 
-# Ejecutar la aplicación con opciones simplificadas
+# Comando de arranque
 ENTRYPOINT ["java", "-jar", "app.jar"]
