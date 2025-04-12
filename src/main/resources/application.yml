@@ -9,20 +9,21 @@ spring:
       - org.springframework.boot.actuate.autoconfigure.metrics.SystemMetricsAutoConfiguration
 
 server:
-  port: 8761
+  port: 8762
 
 eureka:
   server:
     enable-self-preservation: true
   instance:
-    preferIpAddress: true
-    hostname: ${HOSTNAME:registry-server}
+    hostname: registry-server
+    preferIpAddress: false
   client:
     registerWithEureka: false
     fetchRegistry: false
     serviceUrl:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
 
+# Configuración de actuator simplificada
 management:
   endpoints:
     enabled-by-default: false
@@ -35,6 +36,9 @@ management:
   metrics:
     enable:
       all: false
+      system: false
+      process: false
+      jvm: false
   health:
     defaults:
       enabled: false
